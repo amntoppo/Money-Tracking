@@ -18,20 +18,28 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
-    final int  permissionCode = 1980;
+    final int permissionCode = 1980;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-           // requestPermissions(new String[]{Manifest.permission.READ_SMS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.RECEIVE_SMS}, permissionCode);
+            // requestPermissions(new String[]{Manifest.permission.READ_SMS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS}, permissionCode);
             return;
         }
 
-        createNotificationChannel();
-        createNotification();
+
+
+
+        ((MyApplication) getApplication()).triggerNotification(DetailsActivity.class, getString(R.string.channel_id), "Money Tracking",
+                "Current balance:", "Balance remaining:",  NotificationCompat.PRIORITY_DEFAULT, getResources().getInteger(R.integer.notification_id),
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        //createNotificationChannel();
+        //createNotification();
 
 
     }
@@ -41,12 +49,10 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permission, int[] grantResult) {
         switch (requestCode) {
             case permissionCode: {
-                if(grantResult[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResult[0] == PackageManager.PERMISSION_GRANTED) {
                     //GRANTED
                     Log.e("permission", "granted");
-                }
-
-                else {
+                } else {
                     //not granted
                 }
             }
@@ -72,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.channel_id))
                 .setSmallIcon(R.drawable.small_icon)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.large_icon))
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.large_icon))
                 .setContentTitle("Money Tracking")
                 .setContentText("A demo notification text")
                 .setStyle(new NotificationCompat.BigTextStyle().bigText("a demo notification text"))

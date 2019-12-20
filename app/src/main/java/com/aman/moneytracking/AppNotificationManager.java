@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -18,13 +19,14 @@ public class AppNotificationManager {
     private NotificationManager notificationManager;
 
     private AppNotificationManager(Context context) {
+        //Log.e("notify", "constructor");
         this.context = context;
         notificationManagerCompat = NotificationManagerCompat.from(context);
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
-    public AppNotificationManager getInstance(Context context) {
-        if(instance == null) {
+    public static AppNotificationManager getInstance(Context context) {
+        if (instance == null) {
             instance = new AppNotificationManager(context);
         }
         return instance;
@@ -40,7 +42,7 @@ public class AppNotificationManager {
         }
     }
 
-    public void triggerNotification(Class targetActivity,String channelID, String title, String text, String bigText, int priority, int notificationID, int pendingIntentFlag) {
+    public void triggerNotification(Class targetActivity, String channelID, String title, String text, String bigText, int priority, int notificationID, int pendingIntentFlag) {
         Intent intent = new Intent(context, DetailsActivity.class);
         intent.putExtra("title", title);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -50,7 +52,7 @@ public class AppNotificationManager {
                 .setContentTitle(title)
                 .setContentText(text)
                 .setSmallIcon(R.drawable.small_icon)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),R.drawable.large_icon))
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.large_icon))
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(bigText))
                 .setPriority(priority)
                 .setContentIntent(pendingIntent)
@@ -60,6 +62,7 @@ public class AppNotificationManager {
         notificationManagerCompat.notify(notificationID, builder.build());
 
     }
+
     public void updateNotification(Class targetActivity, String channelID, String title, String text, String bigtext, int priority, int notificationID) {
         Intent intent = new Intent(context, DetailsActivity.class);
         intent.putExtra("title", title);
@@ -83,7 +86,6 @@ public class AppNotificationManager {
     public void cancelNotification(int notificationID) {
         notificationManager.cancel(notificationID);
     }
-
 
 
 }
