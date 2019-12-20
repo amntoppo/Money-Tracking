@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Money Tracking</string>
+    <string name="channel_name">Extra</string>
+    <string name="channel_id">Extra</string>
+    <string name="channel_description">The channel used for extra purposes</string>
 </resources>
