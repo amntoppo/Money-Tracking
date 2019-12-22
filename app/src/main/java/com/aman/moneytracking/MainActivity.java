@@ -9,12 +9,14 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
     final int permissionCode = 1980;
@@ -64,18 +66,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menuAbout:
-
-
             case R.id.menuSettings:
+                Log.e("toolbar:", "settings");
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
 
 
 
             case R.id.menuLogout:
+                return true;
+
+
+                default:
+                    return super.onOptionsItemSelected(item);
 
 
         }
-        return true;
     }
 
     @Override
@@ -92,4 +99,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void test(View view) {
+        startActivity(new Intent(this, SettingsActivity.class));
+    }
 }
