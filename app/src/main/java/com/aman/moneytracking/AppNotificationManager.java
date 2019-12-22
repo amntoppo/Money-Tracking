@@ -43,7 +43,7 @@ public class AppNotificationManager {
     }
 
     public void triggerNotification(Class targetActivity, String channelID, String title, String text, String bigText, int priority, int notificationID, int pendingIntentFlag) {
-        Intent intent = new Intent(context, DetailsActivity.class);
+        Intent intent = new Intent(context, targetActivity);
         intent.putExtra("title", title);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, pendingIntentFlag);
