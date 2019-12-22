@@ -24,11 +24,14 @@ public class messageReceiver extends BroadcastReceiver {
                 final Object[] pduPbject = (Object[]) bundle.get("pdus");
                 for(int i = 0; i<pduPbject.length; i++) {
                     SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pduPbject[i]);
-                    String phoneNumber = currentMessage.getDisplayOriginatingAddress();
-                    String message = currentMessage.getDisplayMessageBody().split(":")[1];
-                    message = message.substring(0, message.length()-1);
-                    Log.i("SmsReceiver", "senderNum: " + phoneNumber + "; message: " + message);
-                    Toast.makeText(context, "senderNum: " + phoneNumber + "; message: " + message, Toast.LENGTH_LONG).show();
+                    String message = currentMessage.getDisplayMessageBody();
+                    String target = "debited";
+                    int index = message.indexOf(target);
+                    int subIndex = index + target.length();
+                    String finalMessage = message.substring(subIndex, subIndex+15);
+                    String intvalue = finalMessage.replaceAll("[^0-9]", "");
+
+                    Log.e("SmsReceiver", "senderNum: " + currentMessage.getDisplayOriginatingAddress() +"; message: " + intvalue);
                 }
             }
         }
