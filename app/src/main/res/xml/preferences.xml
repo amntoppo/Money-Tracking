@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
         app:key="pref_category_notification"
         app:title="Notification">
@@ -27,5 +28,16 @@
             app:title="Update current balance"
             app:useSimpleSummaryProvider="true"
             />
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:title="Usage"
+        >
+        <EditTextPreference
+            app:key="pref_daily_minimum"
+            app:title="Daily Minimum"
+            app:summary="Set minimum amount to spend daily"
+            app:useSimpleSummaryProvider="true"
+            />
+
     </PreferenceCategory>
 </PreferenceScreen>

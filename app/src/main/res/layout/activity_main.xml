@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#323232"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -15,5 +16,16 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <Switch
+        android:id="@+id/notification_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/switch_text"
+        android:textColor="@color/colorPrimary"
+        android:padding="40dp"
+        android:textSize="25sp"
+        android:fontFamily="monospace"
+        />
 
 </LinearLayout>

@@ -9,6 +9,6 @@
         <item>Light Mode</item>
         <item>Dark mode</item>
     </string-array>
-
+<string name="switch_text">Notification</string>
 
 </resources>
