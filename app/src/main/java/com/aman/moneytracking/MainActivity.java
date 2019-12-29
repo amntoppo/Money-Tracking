@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("pref_notification", isChecked);
                 editor.apply();
+                if(isChecked) {
+                    triggerNotification();
+                }
 
             }
         });
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         if( sharedPreferences.getBoolean("pref_notification", true)) {
             String balance = sharedPreferences.getString("pref_balance", "0");
             Log.e("pref", balance);
+
             triggerNotification();
         }
     }
@@ -85,11 +89,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void triggerNotification() {
+    public void triggerNotification() {
         //trigger Notification from MyApplication
         ((MyApplication) getApplication()).triggerNotification(DetailsActivity.class, getString(R.string.channel_id), "Money Tracking",
                 "Current balance:", "Balance remaining:",  NotificationCompat.PRIORITY_DEFAULT, getResources().getInteger(R.integer.notification_id),
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.FLAG_UPDATE_CURRENT, 0);
 
     }
 

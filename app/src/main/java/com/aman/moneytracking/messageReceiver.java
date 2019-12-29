@@ -1,5 +1,6 @@
 package com.aman.moneytracking;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +10,13 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.app.NotificationCompat;
+
 public class messageReceiver extends BroadcastReceiver {
 
     final SmsManager sms = SmsManager.getDefault();
+    int value ;
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -22,6 +27,7 @@ public class messageReceiver extends BroadcastReceiver {
         try {
             if(bundle!=null) {
                 final Object[] pduPbject = (Object[]) bundle.get("pdus");
+                assert pduPbject != null;
                 for(int i = 0; i<pduPbject.length; i++) {
                     SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pduPbject[i]);
                     String message = currentMessage.getDisplayMessageBody();
@@ -30,16 +36,25 @@ public class messageReceiver extends BroadcastReceiver {
                     int subIndex = index + target.length();
                     String finalMessage = message.substring(subIndex, subIndex+15);
                     String intvalue = finalMessage.replaceAll("[^0-9]", "");
+                    value = Integer.parseInt(intvalue);
 
                     Log.e("SmsReceiver", "senderNum: " + currentMessage.getDisplayOriginatingAddress() +"; message: " + intvalue);
                 }
+
             }
         }
         catch (Exception e){
 
         }
+        MyApplication myApplication = (MyApplication) context.getApplicationContext();
+        myApplication.triggerNotification(DetailsActivity.class, context.getString(R.string.channel_id), "Money Tracking",
+                "Current balance:", "Balance remaining:",  NotificationCompat.PRIORITY_DEFAULT, context.getResources().getInteger(R.integer.notification_id),
+                PendingIntent.FLAG_UPDATE_CURRENT, value);
+
 
     }
+
+
 }
 
 
